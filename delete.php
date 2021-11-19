@@ -8,15 +8,15 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     
     $sql = "DELETE FROM employees WHERE id = ?";
     
-    if($stmt = mysqli_prepare($link, $sql)){
+    if($stmt = $mysqli->prepare($sql)){
         
-        mysqli_stmt_bind_param($stmt, "i", $param_id);
+      $stmt->bind_param("i", $param_id);
         
         
         $param_id = trim($_POST["id"]);
         
        
-        if(mysqli_stmt_execute($stmt)){
+        if($stmt->execute()){
             
             header("location: index.php");
             exit();
@@ -26,10 +26,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
      
    
-    mysqli_stmt_close($stmt);
+    $stmt->close($stmt);
     
     
-    mysqli_close($link);
+    $mysqli->close($link);
 } else{
     
     if(empty(trim($_GET["id"]))){
